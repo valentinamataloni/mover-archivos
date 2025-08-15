@@ -8,6 +8,7 @@ La infraestructura (storages, contenedores y function app) se despliega usando *
 
 ## 📂 Estructura del proyecto
 
+---
 
 ├── mover-archivos-function/ # Código de la Azure Function
 │ ├── function.json
@@ -45,7 +46,7 @@ terraform apply -auto-approve
 
 ---
 
-Esto creará:
+## Esto creará:
 +Grupo de recursos
 +Storage de origen (con contenedor origen)
 +Storage de destino (con contenedor destino)
@@ -57,7 +58,7 @@ Instalar dependencias
 cd mover-archivos-function
 npm install
 
-Configurar las variables de entorno en Azure
+## Configurar las variables de entorno en Azure
 
 az functionapp config appsettings set \
   --name func-mover-archivos \
@@ -82,3 +83,4 @@ az storage blob upload \
 El archivo será detectado por la Function.
 
 Se moverá automáticamente al contenedor destino del storage de destino.**
+
