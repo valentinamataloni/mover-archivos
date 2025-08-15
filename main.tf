@@ -1,17 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-  subscription_id = "4dc63939-80f6-4f50-bd19-bc605cf2786d"
-}
-
 # Sufijo aleatorio para nombres únicos
 resource "random_integer" "suffix" {
   min = 10000
@@ -58,7 +44,7 @@ resource "azurerm_storage_container" "destino" {
 
 # 6 - App Service Plan (Consumption para Functions)
 resource "azurerm_service_plan" "plan" {
-  name                = "plan-functions"
+  name                = "plan-functions-${random_integer.suffix.result}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   os_type             = "Linux"
@@ -67,7 +53,7 @@ resource "azurerm_service_plan" "plan" {
 
 # 7 - Azure Linux Function App
 resource "azurerm_linux_function_app" "function" {
-  name                       = "func-mover-archivos"
+  name                       = "func-mover-archivos-${random_integer.suffix.result}"
   resource_group_name        = azurerm_resource_group.rg.name
   location                   = azurerm_resource_group.rg.location
   service_plan_id            = azurerm_service_plan.plan.id
@@ -82,14 +68,15 @@ resource "azurerm_linux_function_app" "function" {
 
   app_settings = {
     # Conexión para el Blob Trigger
-    "AzureWebJobsStorage"          = azurerm_storage_account.origen.primary_connection_string
+    "AzureWebJobsStorage" = azurerm_storage_account.origen.primary_connection_string
 
     # Datos para copiar a destino
-    "DEST_STORAGE_ACCOUNT"         = azurerm_storage_account.destino.name
-    "DEST_ACCESS_KEY"               = azurerm_storage_account.destino.primary_access_key
+    "DEST_STORAGE_ACCOUNT" = azurerm_storage_account.destino.name
+    "DEST_ACCESS_KEY"      = azurerm_storage_account.destino.primary_access_key
 
     # Config estándar de Azure Functions
-    "FUNCTIONS_EXTENSION_VERSION"   = "~4"
-    "FUNCTIONS_WORKER_RUNTIME"      = "node"
+    "FUNCTIONS_EXTENSION_VERSION" = "~4"
+    "FUNCTIONS_WORKER_RUNTIME"    = "node"
   }
 }
+
