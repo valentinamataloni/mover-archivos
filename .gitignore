@@ -34,6 +34,9 @@ override.tf.json
 *_override.tf.json
 .terraform.lock.hcl
 
+# Variables locales
+*.tfvars
+
 # ==== Node.js ====
 node_modules/
 npm-debug.log
@@ -69,4 +72,5 @@ __pycache__/
 # Azurite artifacts
 __blobstorage__
 __queuestorage__
+
 __azurite_db*__.json
