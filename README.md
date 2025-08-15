@@ -11,17 +11,29 @@ La infraestructura (storages, contenedores y function app) se despliega usando *
 ---
 
 ├── mover-archivos-function/ # Código de la Azure Function
+
 │ ├── function.json
+
 │ ├── index.js
+
 │ ├── package.json
+
 │ ├── package-lock.json
+
 │ └── host.json
+
 ├── terraform/ # Infraestructura como código
+
 │ ├── main.tf
+
 │ ├── variables.tf
+
 │ ├── outputs.tf
+
 │ └── terraform.tfstate # (Ignorado en git)
+
 ├── .gitignore
+
 └── README.md
 
 --
@@ -83,4 +95,5 @@ az storage blob upload \
 El archivo será detectado por la Function.
 
 Se moverá automáticamente al contenedor destino del storage de destino.**
+
 
